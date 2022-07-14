@@ -12,7 +12,7 @@
     <title>Project</title>
 </head>
 <body>
-    <!-- <div id="loader" class="building-blocks">
+    <div id="loader" class="building-blocks">
         <div></div>
         <div></div>
         <div></div>
@@ -20,7 +20,7 @@
         <div></div>
         <div></div>
         <div></div>
-    </div> -->
+    </div>
     <nav id="content" class="bg-slate-800 w-full py-3 px-10">
         <div class="flex justify-between items-center bg-slate-800 w-full py-3 px-10">
             <div>
