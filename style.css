@@ -45,9 +45,9 @@
 .building-blocks {
   position: relative; }
   .building-blocks div {
-    height: 30px;
+    height: 20px;
     position: absolute;
-    width: 30px; 
+    width: 20px; 
   }
     .building-blocks div:after {
       -webkit-animation: building-blocks 2.1s ease infinite backwards;
@@ -55,8 +55,8 @@
       background: #46E0EA;
       content: '';
       display: block;
-      height: 30px;
-      width: 30px; }
+      height: 20px;
+      width: 20px; }
     .building-blocks div:nth-child(1) {
       -webkit-transform: translate(-50%, -50%) translate(60%, 120%);
               transform: translate(-50%, -50%) translate(60%, 120%); }
