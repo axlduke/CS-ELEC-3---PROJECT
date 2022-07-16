@@ -20,7 +20,7 @@
 
                 $_SESSION['session_id'] = $get_data['id'];
                 $_SESSION['session_email'] = $get_data['email'];
-                
+            
                 header('location: ../index.php');
             }else{
                 echo "Email or password did not mactch";

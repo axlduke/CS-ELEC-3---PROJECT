@@ -1,63 +1,55 @@
 <?php 
     include 'includes/connection.php';
     session_start();
+    if (!isset($_SESSION['session_id'])){
+        echo '<script>window.alert("PLEASE LOGIN FIRST!!")</script>';
+        echo '<script>window.location.replace("login.php");</script>';
+    }
 ?>
-<form method="POST">
-    <p>
-        <input type="text" name="current_location" placeholder="Enter your current location">
-        <input type="text" name="current_latitude" placeholder="Enter your current latitude">
-        <input type="text" name="current_longitude" placeholder="Enter your current longitude">
-    </p>
-    
+<form method="POST" action="auth/submit_place_button.php">
+<!--         <span>Hi, <?php echo $_SESSION['session_email'];?></span> -->
+        <label>Current Place</label>
+        <select name="current_location">
+            <?php 
+                    $sql = "SELECT * FROM `locations`";
+                    $all_location = mysqli_query($connection,$sql);
+                    while ($location = mysqli_fetch_array(
+                        $all_location,MYSQLI_ASSOC)):; 
+            ?>
+                <option value="<?php echo $location["name"];?>"><?php echo $location["name"];?></option>
+            <?php 
+                endwhile; 
+            ?>
+        </select>
 
-    <p>
-        <input type="text" name="first_location" placeholder="Enter the location">
-        <input type="text" name="first_latitude" placeholder="Enter latitude">
-        <input type="text" name="first_longitude" placeholder="Enter longitude">
-    </p>
-    
+        <label>1st Place</label>
+        <select name="first_location">
+            <?php 
+                    $sql = "SELECT * FROM `locations`";
+                    $all_location = mysqli_query($connection,$sql);
+                    while ($location = mysqli_fetch_array(
+                        $all_location,MYSQLI_ASSOC)):; 
+            ?>
+                <option value="<?php echo $location["name"];?>"><?php echo $location["name"];?></option>
+            <?php 
+                endwhile; 
+            ?>
+        </select>
 
-    <p>
-        <input type="text" name="second_location" placeholder="Enter the location">
-        <input type="text" name="second_latitude" placeholder="Enter latitude">
-        <input type="text" name="second_longitude" placeholder="Enter longitude">
-    </p>
- 
+        <label>2nd Place</label>
+        <select name="second_location">
+            <?php 
+                    $sql = "SELECT * FROM `locations`";
+                    $all_location = mysqli_query($connection,$sql);
+                    while ($location = mysqli_fetch_array(
+                        $all_location,MYSQLI_ASSOC)):; 
+            ?>
+                <option value="<?php echo $location["name"];?>"><?php echo $location["name"];?></option>
+            <?php 
+                endwhile; 
+            ?>
+        </select>
+
     <input type="submit" name="submit_coordinates">
 
 </form>
-<?php
-    include "hillclimb.php";
-    if (isset($_POST['submit_coordinates'])) {
-        $current_location = $_POST['current_location'];
-        $current_latitude = $_POST['current_latitude'];
-        $current_longitude = $_POST['current_longitude'];
-        $first_location = $_POST['first_location'];
-        $first_latitude = $_POST['first_latitude'];
-        $first_longitude = $_POST['first_longitude'];
-        $second_location = $_POST['second_location'];
-        $second_latitude = $_POST['second_latitude'];
-        $second_longitude = $_POST['second_longitude'];
-
-        ?>
- 
-        <iframe width="100%" height="500" src="https://maps.google.com/maps?q=<?php echo $current_latitude; ?>,<?php echo $current_longitude; ?>&output=embed"></iframe>
- 
-        <?php
-        try
-    {
-        $tsp = TspBranchBound::getInstance();
-        $tsp->addLocation(array('id'=>$current_location, 'latitude'=>$current_latitude, 'longitude'=>$current_longitude));
-        $tsp->addLocation(array('id'=>$first_location, 'latitude'=>$first_latitude, 'longitude'=>$first_longitude));
-        $tsp->addLocation(array('id'=>$second_location, 'latitude'=>$second_latitude, 'longitude'=>$second_longitude));
-        $ans = $tsp->solve();
-        echo "\nTotal cost: " . ceil($ans['cost']) . "\n\n";
-    }
-    catch (Exception $e)
-    {
-        echo $e;
-        exit;
-            }
-   
-    }
-?>
